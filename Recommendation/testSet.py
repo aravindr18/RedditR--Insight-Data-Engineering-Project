@@ -1,10 +1,7 @@
+""" test ALS"""
 
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext, Row
-from pyspark.sql.types import *
-#import pyspark_cassandra
-
-
 from pyspark.sql.types import *
 from pyspark.storagelevel import StorageLevel
 import sys

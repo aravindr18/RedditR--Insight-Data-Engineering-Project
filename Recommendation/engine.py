@@ -1,8 +1,9 @@
+""" backbone of the ALS recommendation algorithm """
+
 import pyspark
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext, Row
 from pyspark.sql.types import *
-#import pyspark_cassandra
 from pyspark.mllib.recommendation import ALS, Rating
 from pyspark.storagelevel import StorageLevel
 import sys
@@ -27,7 +28,6 @@ def main(argv):
     user_hash = rawDF.map(lambda (a,b,c): (a,hashFunction(a)))
     distinctUser = user_hash.distinct()
     userHashDF = sqlContext.createDataFrame(distinctUser,["user","hash"])
-    
     userHashDF.write.format("org.apache.spark.sql.cassandra").options(table ="userhash", keyspace =  keyspace).save(mode="append")
     
 
@@ -42,17 +42,10 @@ def main(argv):
     # for the algorithm to consume
     ratings = rawDF.map(lambda (a,b,c) : Rating(hashFunction(a),hashFunction(b),float(c)))
 
-    # This is the user preferences
-    #rawPreference = sc.parallalize([(1,x.strip(),100) for x in user_preference.split(",")])\
-                #.map(lambda (a,b,c):Rating(hashFunction(a),hashFunction(b),hashFunction(c)))
-
-
+    
     model = ALS.trainImplicit(ratings,10,10,alpha=0.01,seed=5)
     model.save(sc, "hdfs://ec2-52-71-113-80.compute-1.amazonaws.com:9000/reddit/recommend/model")
 
-    #a = model.recommendProductsForUsers(10)
-    #print a
-    #print a.take(100)
     sc.stop()
 
 

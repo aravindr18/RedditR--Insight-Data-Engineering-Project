@@ -1,3 +1,5 @@
+""" This module does a self_join on the dataset by connecting users 
+together based on their interactions """
 import pyspark
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext, Row
@@ -19,7 +21,8 @@ def main(argv):
     rawDF = sqlContext.read.parquet(dirPath).registerTempTable("comments")
     
     
-    
+    # This is where the magic happens
+    # SQL self join to join users who have interacted with one another
     df = sqlContext.sql("""
     SELECT t1.subreddit as Subreddit,
        
@@ -32,7 +35,7 @@ def main(argv):
 FROM comments t1 INNER JOIN comments t2 ON CONCAT("t1_",t1.id) = t2.parent_id where t1.author!='[deleted]' and t2.author!='[deleted]'
 """)
 
-    
+    # write it into parquet ? Why ? Cause it compresses the data and is really fast to read from !
     df.write.parquet("hdfs://ec2-52-71-113-80.compute-1.amazonaws.com:9000/reddit/data/"+argv[1]+"-selfjoin.parquet")
 
 

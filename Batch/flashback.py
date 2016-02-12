@@ -1,10 +1,7 @@
-# This python script reads data from S3 and tries to display the first post of a user
-
-# The result will be stored in Cassandra with the following Schema
-# User | DateTime | Text | Link Topic | Subreddit
-# Also display the timedifference between query time and DateTime returned by cassandra
-
-
+"""This python script reads data from S3 and tries to display the first post of a user
+The result will be stored in Cassandra with the following Schema
+ User | DateTime | Text | Link Topic | Subreddit
+ """
 import pyspark
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext, Row
@@ -13,6 +10,7 @@ import pyspark_cassandra
 from pyspark.storagelevel import StorageLevel
 import sys
 
+# keyspace on cassandra where the database is
 keyspace = 'flashback'
 
 
@@ -20,7 +18,6 @@ def main(argv):
     Conf = (SparkConf().setAppName("Flashback"))
     sc = SparkContext(conf=Conf)
     sqlContext = SQLContext(sc)
-
 
     dirPath = "hdfs://ec2-52-71-113-80.compute-1.amazonaws.com:9000/reddit/data/"+argv[1]+".parquet"
 
@@ -30,6 +27,7 @@ def main(argv):
 
     # TimeMachine
     # First post information of every user
+
     flashback = sqlContext.sql("SELECT author, created_utc, body, link_id, subreddit from comments ")
     flashback.write.format("org.apache.spark.sql.cassandra").options(table ="firstpost", keyspace =  keyspace).save(mode="append")
 
@@ -50,6 +48,7 @@ def main(argv):
                                       """)
 
 
+    # write it to cassandra
     subreddit_infos.write.format("org.apache.spark.sql.cassandra").options(table ="subredditinfo", keyspace =  keyspace).save(mode="append")
     print "SUBREDDIT INFO DONE"
     sc.stop()

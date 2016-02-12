@@ -1,9 +1,12 @@
+""" this bold aggregates realtime comments per minute
+thereby showing us the most trending subreddit and user every minute """
+
 from pyleus.storm import SimpleBolt
 import datetime
 import time
 from cassandra.cluster import Cluster
 from cassandra.query import BatchStatement, PreparedStatement
-from operator import itemgetter#, attrgetter
+from operator import itemgetter
 import sys
 import logging
 import logging.config
@@ -26,14 +29,6 @@ toLog = False
 
 
 
-
-def execBatch(batch):
-	try:
-		session.execute(batch)
-	except:
-		e = sys.exc_info()[0]
-		log.exception("Exception on batch insert: " + str(e))
-
 def insert_trends(minuteslot,records):
 	
 	sorted_r = sorted(records.items(),key=itemgetter(1),reverse=True)[:20]
@@ -44,12 +39,12 @@ def insert_trends(minuteslot,records):
 		batch.add(cql_trend_stmt,(minuteslot,subreddit,count))
 		count+=1
 		if(count==50):
-			execBatch(batch)
+			session.execute(batch)
 			count=0
 			batch=BatchStatement()
 
 	if (count>0):
-		execBatch(batch)
+		session.execute(batch)
 
 def insert_author(minuteslot,records):
 	sorted_r = sorted(records.items(),key=itemgetter(1),reverse=True)[:20]
@@ -59,12 +54,12 @@ def insert_author(minuteslot,records):
 		batch.add(cql_author_stmt,(minuteslot,author,count))
 		count+=1
 		if(count==50):
-			execBatch(batch)
+			session.execute(batch)
 			count=0
 			batch=BatchStatement()
 
 	if (count>0):
-		execBatch(batch)
+		session.execute(batch)
 
 class MinuteBolt(SimpleBolt):
 	def initialize(self):

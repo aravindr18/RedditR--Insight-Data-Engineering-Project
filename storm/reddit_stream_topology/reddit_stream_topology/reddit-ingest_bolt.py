@@ -1,3 +1,5 @@
+""" Real-time processing """
+
 from pyleus.storm import SimpleBolt
 import simplejson as json
 import datetime
@@ -12,23 +14,16 @@ cql_query = "INSERT INTO rt_reddit (secslot,subreddit,author,created_utc,body) V
 cql_reddit_stmt = session.prepare(cql_query)
 
 
-def insert_cql(cql_prep_stmt, params): 
-    try:
-        session.execute_async(cql_prep_stmt, params)
-    except:
-        print "ERROR"
 
-def insert_text(reddit):
-    secslot = long(time.time())
-    insert_cql(cql_reddit_stmt, [secslot, reddit['subreddit'], reddit['author'], reddit['created_utc'],reddit['body']])
+    
 def extract_json(json_line):
 
+    """ simple json is slightly faster to use to load jsons than the default json """
     try:
         item = json.loads(json_line)
     except:
 	   return None 
 
-    
     reddit = {}
     reddit['author'] = item['author']
     reddit['subreddit'] = item['subreddit']
@@ -37,15 +32,17 @@ def extract_json(json_line):
 
     return reddit
 
-
-
 class RedditIngestBolt(SimpleBolt):
 
     OUTPUT_FIELDS = ['author', 'subreddit', 'body']
     def process_tuple(self, tup):
         json_reddit, = tup.values
         reddit = extract_json(json_reddit)
-        insert_text(reddit)
+        # find the current time
+        secslot = long(time.time())
+        # execute cassandra insert for real-time comments
+        session.execute_async(cql_reddit_stmt, [secslot, reddit['subreddit'], reddit['author'], reddit['created_utc'],reddit['body']])
+        # emit the values for the next bolt!
         self.emit((reddit['author'], reddit['subreddit'], reddit['body']), anchors=[tup])
 
 if __name__ == '__main__':

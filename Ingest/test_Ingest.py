@@ -1,3 +1,5 @@
+""" This is a useful tester file to check if the parquet table has been dumped properly 
+"""
 
 import sys
 import pyspark
@@ -15,4 +17,5 @@ parquetFile = sqlContext.read.parquet("hdfs://ec2-52-71-113-80.compute-1.amazona
 
 parquetFile.registerTempTable("temp");
 teenagers = sqlContext.sql("SELECT count(*) FROM temp WHERE author ='cup' ")
+
 print teenagers.collect()
