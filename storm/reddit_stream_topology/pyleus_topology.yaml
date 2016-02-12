@@ -1,0 +1,60 @@
+name: reddit_stream_topology
+
+serializer: json
+
+workers: 3
+
+topology:
+
+    - spout:
+        name: kafka-json-reddit
+        type: kafka
+        options:
+            # The Kafka topic to stream from.
+            # Required.
+            topic: stream
+            # ZooKeeper connection string. Comma-separated list of ZooKeeper
+            # servers.
+            # Required.
+            zk_hosts: 172.31.1.40:2181,172.31.1.41:2181,172.31.1.42:2181,172.31.1.43:2181
+
+            # Root path in ZooKeeper to store consumer offsets.
+            # Defaults to: /pyleus-kafka-offsets/<topology name>
+            zk_root: /pyleus-kafka-offsets/reddit_stream_topology
+
+            # Kafka consumer ID.
+            # Defaults to: pyleus-<topology name>
+            consumer_id: storm_rt
+
+            # Whether the initial offset should be that specified by
+            # start_offset_time (true) or the head of the stream (false).
+            # Defaults to false.
+            from_start: false
+
+            # The offset time to start with if from_start is true.
+            # Defaults to the earliest offset time in the stream.
+            #start_offset_time: 6392175
+            start_offset_time: 6392175
+
+            # support binary data like google protobuf
+            binary_data: true
+
+    - bolt:
+        name: kafka-reddit-ingest
+        module: reddit_stream_topology.reddit-ingest_bolt
+        groupings:
+            - shuffle_grouping: kafka-json-reddit
+        parallelism_hint: 3
+        tasks: 6
+    - bolt:
+        name: reddit-trend
+        module: reddit_stream_topology.reddit-trend_bolt
+        groupings:
+            - fields_grouping:
+                 component: kafka-reddit-ingest
+                 fields:
+                    - subreddit 
+        tick_freq_secs: 60.0
+
+
+
