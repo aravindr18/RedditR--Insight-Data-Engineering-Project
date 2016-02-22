@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Engagement</title>
+ 
+    
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+        <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+       
+        <script>
+          var availableTags=[];
+          {% for data in data %}
+            availableTags.push('{{data}}');
+          {% endfor %}
+          
+          $(".autocomplete" ).autocomplete({
+              source: availableTags
+            });
+
+
+          
+        </script>
+        
+          <style>
+                .ui-autocomplete {
+                        position: absolute;
+                        z-index: 10;
+                        cursor: default;
+                        padding: 0;
+                        margin-top: 2px;
+                        list-style: none;
+                        background-color: #ffffff;
+                        border: 1px solid #ccc
+                        -webkit-border-radius: 5px;
+                           -moz-border-radius: 5px;
+                                border-radius: 5px;
+                        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                           -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                    }
+                    .ui-autocomplete > li {
+                      padding: 3px 20px;
+                    }
+                    .ui-autocomplete {
+                      padding: 3px 20px;
+                      max-height: 120px;
+                      overflow-y: auto;
+                      overflow-x:hidden;
+                      padding-right: 10px;
+                    }
+                    .ui-autocomplete > li.ui-state-focus {
+                      background-color: #DDD;
+                    }
+                    .ui-helper-hidden-accessible {
+                      display: none;
+                    }
+        </style>
+    
+  </head>
+ 
+  <body>
+ 
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+                    <li role="presentation" ><a href="/">Home</a>
+                    </li>
+                    <li role="presentation"><a href="trends">Trends</a>
+                    </li>
+                    <li role="presentation" class="active"><a href="engage">Engagement</a>
+                    </li>
+                    <li role="presentation" ><a href="flashBack">Flashback</a>
+                    </li>
+                    <li role="presentation" ><a href="snapShot">Snapshot</a>
+                    </li>
+                    <li role="presentation"><a href="http://www.slideshare.net/AravindKumarRamesh/redditr-insight-project">Slides</a>
+                    </li>
+                    
+                    
+                </ul>
+        <h3 class="text-muted">RedditR</h3>
+      </div>
+ 
+       <div class="jumbotron">
+            <h1>Content Engagement</h1>
+            <div class="form-group ui-widget">
+                <form class="form-group" action="/engage" method="POST">
+                <label for="subr">Find out the most active and influential users in a subreddit</label>
+                <input id="inputbox" class="form-control autocomplete" placeholder="Search for /r/" name="subr">
+                <p class="lead"></p>
+                <!--<p><a class="btn btn-lg btn-success" name="my-form" value="send" role="button">Take me back in time!</a></p>-->
+                
+                <div class="checkbox">
+               
+                <label>
+                  <input type="checkbox" name="darthvader" > Download Everything!
+                </label>
+              </div>
+             <input type="submit" id="submit_btn" name="my-form2" value="Crawl Reddit!" class="btn btn-lg btn-success">
+                      
+              
+
+            </form>
+          </div>
+
+        </div>
+ 
+       
+ 
+      <footer class="footer">
+        <p>&copy; Company 2015</p>
+      </footer>
+ 
+    </div>
+  </body>
+</html>

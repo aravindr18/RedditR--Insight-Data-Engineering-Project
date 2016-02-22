@@ -1,0 +1,73 @@
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 1.67ms
+WARNING:tornado.access:404 GET /favicon.ico (104.247.55.102) 1.07ms
+WARNING:tornado.access:404 GET /showSignUp (104.247.55.102) 0.92ms
+WARNING:tornado.access:404 GET /favicon.ico (104.247.55.102) 1.06ms
+WARNING:tornado.access:404 GET /favicon.ico (104.247.55.102) 0.92ms
+WARNING:tornado.access:404 GET /favicon.ico (104.247.55.102) 0.93ms
+WARNING:tornado.access:404 GET /favicon.ico (104.247.55.102) 1.34ms
+WARNING:tornado.access:404 GET /favicon.ico (104.247.55.102) 1.05ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 1.69ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 1.04ms
+WARNING:tornado.access:404 GET /favicon.ico (104.247.55.102) 0.89ms
+ERROR:app:Exception on / [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ubuntu/Downloadsls/app/views.py", line 38, in my_form_post
+    response = session.execute(stmt, parameters=[text])
+  File "cassandra/cluster.py", line 1569, in cassandra.cluster.Session.execute (cassandra/cluster.c:26930)
+    return self.execute_async(query, parameters, trace, custom_payload, timeout).result()
+  File "cassandra/cluster.py", line 3122, in cassandra.cluster.ResponseFuture.result (cassandra/cluster.c:59993)
+    raise self._final_exception
+InvalidRequest: code=2200 [Invalid query] message="Key may not be empty"
+ERROR:tornado.access:500 POST / (104.247.55.102) 219.61ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 1.08ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 0.82ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 0.85ms
+WARNING:tornado.access:404 GET /trends (104.247.55.102) 1.32ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 0.77ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 1.04ms
+WARNING:tornado.access:404 GET /favicon.ico (104.247.55.102) 1.04ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 1.06ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 1.25ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (104.247.55.102) 1.02ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (108.35.31.170) 0.93ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (108.35.31.170) 0.90ms
+WARNING:tornado.access:404 GET /phpmyadmin/scripts/setup.php (208.52.154.240) 1.09ms
+WARNING:tornado.access:404 GET /images/loading32x32.gif (108.35.31.170) 0.87ms
+ERROR:app:Exception on /engage [POST]
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python2.7/dist-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/ubuntu/Downloadsls/app/views.py", line 136, in engage
+    return render_template('engage_viz.html',indegree=json_indegree, outdegree=json_outdegree)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 128, in render_template
+    context, ctx.app)
+  File "/usr/local/lib/python2.7/dist-packages/flask/templating.py", line 110, in _render
+    rv = template.render(context)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 989, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 754, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/Downloadsls/app/templates/engage_viz.html", line 21, in top-level template code
+    {{data.user}}:{{data.influence}}
+  File "/usr/local/lib/python2.7/dist-packages/jinja2/environment.py", line 408, in getattr
+    return getattr(obj, attribute)
+UndefinedError: 'data' is undefined
+ERROR:tornado.access:500 POST /engage (108.35.31.170) 39.62ms

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Snapshot</title>
+
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+        <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+       
+        <style>
+            .list-group-item {
+                position: relative;
+                display: block;
+                padding: 10px 15px;
+                margin-bottom: -1px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                text-align: left;
+            }
+        </style>
+        <script>
+        var lastselected = "a";
+          var availableTags=[];
+          {% for data in data %}
+            availableTags.push('{{data.subreddit}}');
+          {% endfor %}
+          console.log(availableTags);
+          $(function() {
+            
+            $( "#button" ).click(function() {
+                var subreddit = document.getElementById("inputbox").value;
+                $( "div#"+lastselected ).hide( "slow" );
+                 $( "div#"+subreddit ).show( "slow" );
+
+                lastselected = subreddit
+                });
+
+
+            $( ".autocomplete" ).autocomplete({
+              source: availableTags
+            });
+          });
+        </script>
+        <style>
+                .ui-autocomplete {
+                        position: absolute;
+                        z-index: 10;
+                        cursor: default;
+                        padding: 0;
+                        margin-top: 2px;
+                        list-style: none;
+                        background-color: #ffffff;
+                        border: 1px solid #ccc
+                        -webkit-border-radius: 5px;
+                           -moz-border-radius: 5px;
+                                border-radius: 5px;
+                        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                           -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                    }
+                    .ui-autocomplete > li {
+                      padding: 3px 20px;
+                    }
+                    .ui-autocomplete {
+                      padding: 3px 20px;
+                      max-height: 120px;
+                      overflow-y: auto;
+                      overflow-x:hidden;
+                      padding-right: 10px;
+                    }
+                    .ui-autocomplete > li.ui-state-focus {
+                      background-color: #DDD;
+                    }
+                    .ui-helper-hidden-accessible {
+                      display: none;
+                    }
+        </style>
+    </head>
+    <body>
+ 
+    <div class="container">
+        <div class="header">
+            
+            <h3 class="text-muted">RedditR</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            <h1><mark>Reddit Snapshot</mark></h1>
+            <br/>
+
+            <div class="form-group ui-widget">
+                <label>Enter the subreddit</label>
+                    <input id="inputbox" class="form-control autocomplete" placeholder="Search for /r/" />
+                </div>
+                <span class="input-group-btn">
+                    <button id="button" class="btn btn-default" type="button">Go!</button>
+                </span>
+
+            </div>
+
+        
+        {% for data in data %}
+       
+        <div style="display:none" id= "{{data.subreddit}}" class="jumbotron">
+            <h2 style = "align:center; vertical-align:middle;"><mark>/r/{{data.subreddit}}</mark></h2>
+            <h4> {{data.year}}/{{data.month}}</h4>
+                <br/>
+                <ul class="list-group">
+                    <li class="list-group-item active">
+                        <span class="badge" style="font-size: 20px">{{data.totalComments}}</span>
+                        <h4 class="list-group-item-heading" style="font-size: 20px">Total Comments</h4>
+                    </li>
+
+                    <li class="list-group-item ">
+                        <span class="badge" style="font-size: 20px">{{data.distinctAuthors}}</span>
+                        <h4 class="list-group-item-heading" style="font-size: 20px, align:left">Distinct Authors</h4>
+                    </li>
+                    <li class="list-group-item ">
+                        <span class="badge" style="font-size: 20px">{{data.distinctSubmission}}</span>
+                        <h4 class="list-group-item-heading" style="font-size: 20px, align:left">Distinct Submissions</h4>
+                    </li>
+                    <li class="list-group-item ">
+                        <span class="badge" style="font-size: 20px">{{data.commentsPerDAuthor}}</span>
+                        <h4 class="list-group-item-heading" style="font-size: 20px, align:left">Comments/Distinct Author</h4>
+                    </li>
+                    <li class="list-group-item ">
+                        <span class="badge" style="font-size: 20px">{{data.commentsPerDSubmission}}</span>
+                        <h4 class="list-group-item-heading" style="font-size: 20px, align:left">Comments/Distinct Submission</h4>
+                    </li>
+                
+                </ul>
+                    
+                             
+        </div>
+
+
+               
+            
+            {% endfor %}
+        
+          </div>  
+          
+        
+    </div>
+</body>
+</html>     

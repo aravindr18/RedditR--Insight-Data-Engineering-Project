@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Python Flask Bucket List App</title>
+ 
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+ 	<script src="../static/jquery-loader.js"></script>
+ 
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" ><a href="/">Home</a>
+                    </li>
+                    <li role="presentation"><a href="trends">Trends</a>
+                    </li>
+                    <li role="presentation"><a href="engage">Engagement</a>
+                    </li>
+                    <li role="presentation" class="active"><a href="flashBack">Flashback</a>
+                    </li>
+                    <li role="presentation"><a href="snapShot">Snapshot</a>
+                    </li>
+                    <li role="presentation"><a href="http://www.slideshare.net/AravindKumarRamesh/redditr-insight-project">Slides</a>
+                    </li>
+                    
+                    
+                </ul>
+            </nav>
+            <h3 class="text-muted">RedditR</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            <h1>FlashBack</h1>
+            <form class="form-group" action="/flashBack" method="POST">
+        		<label for="usr">Enter your reddit username</label>
+        		<input type="text" class="form-control" name="text">
+        		<p class="lead"></p>
+        		<!--<p><a class="btn btn-lg btn-success" name="my-form" value="send" role="button">Take me back in time!</a></p>-->
+        		<div class="checkbox">
+				   
+				    <label>
+				    	<input type="checkbox" name="option" > Download my entire history!
+				    </label>
+				  </div>
+				 <input type="submit" id="submit_btn" name="my-form" value="Take me back in time!" class="btn btn-lg btn-success">
+
+    			
+
+    		</form>
+
+           <!-- <div class="form-group">
+  				<label for="usr">Enter your reddit username</label>
+  				<input type="text" class="form-control" id="usr">
+			</div>
+            <p class="lead"></p>
+            <p><a class="btn btn-lg btn-success" href="showSignUp" role="button">Take me back in time!</a>
+            </p>-->
+        </div>
+ 		
+        <footer class="footer">
+            <p>&copy; Company 2015</p>
+        </footer>
+ 
+    </div>
+</body>
+ 
+<script>
+	$('.jumbotron').loader();
+	$('#submit_btn').loader.open();
+	
+</script>
+
+
+</html>
+

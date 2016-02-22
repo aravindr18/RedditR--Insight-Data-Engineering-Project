@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>RedditR - What's Trending on Reddit?</title>
+ 
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+ 	<script src="../static/jquery-loader.js"></script>
+ 
+    <style>
+        blockquote {
+            background: #f9f9f9;
+            border-left: 10px solid #000;
+            margin: 1.5em 10px;
+            padding: 0.5em 10px;
+            quotes: "\201C""\201D""\2018""\2019";
+        }
+        blockquote:before {
+            color: #ccc;
+            content: open-quote;
+            font-size: 4em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.4em;
+        }
+        blockquote p {
+            display: inline;
+        }
+    </style>
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="/">Home</a>
+                    </li>
+                    <li role="presentation"><a href="trends">Trends</a>
+                    </li>
+                    <li role="presentation"><a href="engage">Engagement</a>
+                    </li>
+                    <li role="presentation" ><a href="flashBack">Flashback</a>
+                    </li>
+                    <li role="presentation"><a href="snapShot">Snapshot</a>
+                    </li>
+                    <li role="presentation"><a href="http://www.slideshare.net/AravindKumarRamesh/redditr-insight-project">Slides</a>
+                    </li>
+                    
+                    
+                </ul>
+            </nav>
+            <h3 class="text-muted">RedditR</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            <h1>Welcome to RedditR</h1>
+            
+            <blockquote>
+            <p> Understanding the world of Reddit has never been so easy! </p>
+            <p> RedditR is a Data Driven Product that helps you personalize reddit </p>
+            <p> now with live <mark> Trending</mark> feature. </p><br/>
+            <p> Search and get personalized recommendations to contents and users you might be interested in! </p>
+            </blockquote>
+            <br/>
+            
+            <form class="form-group" action="/trends" method="GET">
+                <input type="submit" id="submit_btn" name="live" value="Take me LIVE!" class="btn btn-lg btn-success">
+            </form>
+        </div>
+
+
+ 		
+        <footer class="footer">
+            <p>&copy; Aravind Kumar Ramesh - Insight Data Engineering Fellow - New York</p>
+        </footer>
+ 
+    </div>
+</body>
+ 
+
+
+
+</html>
+

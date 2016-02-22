@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Flashback</title>
+ 
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 
+    <style>
+        blockquote {
+            background: #f9f9f9;
+            border-left: 10px solid #000;
+            margin: 1.5em 10px;
+            padding: 0.5em 10px;
+            quotes: "\201C""\201D""\2018""\2019";
+        }
+        blockquote:before {
+            color: #ccc;
+            content: open-quote;
+            font-size: 4em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.4em;
+        }
+        blockquote p {
+            display: inline;
+        }
+    </style>
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            
+            <h3 class="text-muted">Flashback</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            
+                {% for data in data %}
+                <h1><mark>{{data.author}}</mark></h1>
+                <br/>
+                <p><b>Posted On: </b>{{data.posted_at}} UTC</p>
+                <p><b>Subreddit: </b>{{data.subreddit}}</p>
+                <p><a href= {{data.discussion[1]}}>{{data.discussion[0]}}</a></p>
+                <blockquote >
+                    <p>{{data.post}}</p>
+                </blockquote>
+                
+                
+                {% endfor %}
+            
+        </div>
+    </div>
+</body>
+</html>
+     

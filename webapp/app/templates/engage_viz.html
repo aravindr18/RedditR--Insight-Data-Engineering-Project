@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Engagement</title>
+
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="../static/js/Chart.min.js"></script> 
+        
+        
+        <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+       
+        
+        <style>
+            .list-group-item {
+                position: relative;
+                display: block;
+                padding: 10px 15px;
+                margin-bottom: -1px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                text-align: left;
+            }
+        </style>
+        <script >
+                var xaxis=[];
+                var comments=[];
+                var authors=[];
+                
+                {% for data in trend%}
+                    xaxis.push('{{data.year}}'+'-'+'{{data.month}}');
+                    comments.push('{{data.total_comments}}')
+                    authors.push('{{data.distinct_authors}}')
+                    
+                {% endfor %}
+
+
+               
+        </script>
+    </head>
+    <body>
+ 
+    <!--<div class="container">-->
+        <div class="header">
+            <h3 class="text-muted">RedditR</h3>
+        </div>
+        
+        <div class="row">
+            <div class ="col-md-6">
+                <h1><mark>/r/{{indegree[0].subreddit}}</mark></h1>
+            </div>
+            
+           
+        </div>
+        
+        
+        
+        <div class = "row">
+            <div class="col-md-6" > 
+               
+                
+                <div id="comments" style="width:600px;height:450px;"></div>
+                
+                    <script>
+                         var data = [{
+                          y: comments,
+                          x: xaxis,
+                          line: { width: 5 },
+                          type :'scatter'
+                          
+                          
+                        }];
+                        var layout = {
+                          title: "# of Comments on /r/{{indegree[0].subreddit}}",
+                          yaxis: { title: "comments"},      // set the y axis title
+                          
+                          margin: {                           // update the left, bottom, right, top margin
+                            l: 80, b: 20, r: 10, t: 50
+                          }
+                        };
+
+                        Plotly.plot(document.getElementById('comments'), data, layout)
+
+
+                    </script>
+
+                    
+
+                    <div id="authors" style="width:600px;height:450px display:none;"></div>
+
+                    <script>
+                         var data = [{
+                          y: authors,
+                          x: xaxis,
+                          line: { width: 5 },
+                          type :'scatter'
+                          
+                          
+                        }];
+                        var layout = {
+                          title: "# of users on /r/{{outdegree[0].subreddit}}",
+                          yaxis: { title: "Distinct authors"},      // set the y axis title
+                          
+                          margin: {                           // update the left, bottom, right, top margin
+                            l: 80, b: 20, r: 10, t: 50
+                          }
+                        };
+
+                        Plotly.plot(document.getElementById('authors'), data, layout)
+
+
+                    </script>
+            </div>
+                    
+           
+            <div class="col-md-4">    
+                <h2 style = "align:center; vertical-align:middle;"><mark>Influential</mark></h2>
+
+                
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <span class="badge" style="font-size: 20px">{{indegree[0].user}}</span>
+                            <h4 class="list-group-item-heading" style="font-size: 20px">User</h4>
+                        </li>
+                        <li class="list-group-item ">
+                            <span class="badge" style="font-size: 20px">{{indegree[0].influence}}</span>
+                            <h4 class="list-group-item-heading" style="font-size: 20px, align:left">Influence</h4>
+                        </li>
+                        
+                    </ul>
+                
+                
+                <h2 style = "align:center; vertical-align:middle;"><mark>Active User</mark></h2>
+                
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <span class="badge" style="font-size: 20px">{{outdegree[0].user}}</span>
+                            <h4 class="list-group-item-heading" style="font-size: 20px">User</h4>
+                        </li>
+                        <li class="list-group-item ">
+                            <span class="badge" style="font-size: 20px">{{outdegree[0].influence}}</span>
+                            <h4 class="list-group-item-heading" style="font-size: 20px, align:left">Influence</h4>
+                        </li>
+                        
+                    </ul>
+                    
+                    <h2 style = "align:center; vertical-align:middle;"><mark>You may also Like</mark></h2>
+            
+                    {% for data in recommend%}
+                     <ul class="list-group">
+                        <li class="list-group-item ">
+                            <a href = "http://www.reddit.com/r/{{data.subreddit}}">
+                            <span class="badge" style="font-size: 20px">{{data.subreddit}}</span></a>
+                            
+                        </li>
+                    </ul>
+
+                    
+                    {% endfor %}
+
+
+            </div>  
+                             
+        
+        </div>
+
+        
+
+        <!--</div>  -->
+
+          
+        
+    
+</body>
+</html>     

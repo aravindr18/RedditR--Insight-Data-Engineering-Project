@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>RedditR - What's Trending on Reddit?</title>
+ 
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+ 	<script src="../static/jquery-loader.js"></script>
+
+    
+    <style>
+        blockquote {
+            background: #f9f9f9;
+            border-left: 10px solid #000;
+            margin: 1.5em 10px;
+            padding: 0.5em 10px;
+            quotes: "\201C""\201D""\2018""\2019";
+        }
+        blockquote:before {
+            color: #ccc;
+            content: open-quote;
+            font-size: 4em;
+            line-height: 0.1em;
+            margin-right: 0.25em;
+            vertical-align: -0.4em;
+        }
+        blockquote p {
+            display: inline;
+        }
+
+
+        #live_comments {
+            height: 300px;
+            overflow-y:auto;
+            
+  
+    
+          }
+        #trends {
+            height: 300px;
+            overflow-y:auto;
+            
+          }
+        #live_user{
+            height: 300px;
+            overflow-y:auto;
+            
+          }
+    </style>
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" ><a href="/">Home</a>
+                    </li>
+                    <li role="presentation" class="active"><a href="trends">Trends</a>
+                    </li>
+                    <li role="presentation"><a href="engage">Engagement</a>
+                    </li>
+                    <li role="presentation" ><a href="flashBack">Flashback</a>
+                    </li>
+                    <li role="presentation"><a href="snapShot">Snapshot</a>
+                    </li>
+                    <li role="presentation"><a href="http://www.slideshare.net/AravindKumarRamesh/redditr-insight-project">Slides</a>
+                    </li>
+                    
+                    
+                </ul>
+            </nav>
+            <h3 class="text-muted">Live Feeds</h3>
+        </div>
+ 
+        
+    </div>
+       <div class="row">
+            <h1>&nbsp &nbsp Live Comment Feed &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+            &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Live Trends</h1>
+            <div class="col-md-6" id="live_comments"></div>
+            
+            <div class="col-md-6" id ="trends"></div>      
+        </div>
+        
+        <script>
+            var addIter = 0;
+            var markers = [];
+
+            function rtFeed() {
+              $.get("/api/rt/")
+                .done(function( data ) {
+                  if (addIter == 9){
+                $('#live_comments').empty();
+                  addIter = 0;
+                  }
+                  $.each( data.rt, function( i, item ) {
+                    var d = new Date(item.time_ms*1000);
+                       reddit_html = '<blockquote><p> by: ' + item.author + ' at: ' + d.toString() + ' tag: <b>' + item.subreddit + '</b><br/>' + item.body + '</blockquote>';
+                       $('#live_comments').prepend(reddit_html);
+                    
+                    })
+                  addIter += 1;
+                });
+            }
+
+            setInterval(rtFeed, 3500)
+            </script>
+            <script>
+            var addIter=0;
+            var markers=[];
+
+            function trends() {
+              $.get("/api/minute-trend/")
+                .done(function( data ) {
+                  if (addIter == 9){
+                $('#trends').empty();
+                  addIter = 0;
+                  }
+                  $.each( data.trends, function( i, item ) {
+                    
+                    feed_html = '<blockquote><p><b> Subreddit </b> /r/' + item.subreddit +  ' </p><br/><p><b> Trend Score </b>:' + item.count + '</p>' +'</blockquote>';
+                       $('#trends').prepend(feed_html);
+                    
+                    })
+                  addIter += 1;
+                });
+            }
+
+            setInterval(trends, 10000)
+           </script>
+           
+           <br/>
+            <div class ="row">
+                <h1> &nbsp &nbsp Live User Trend </h1>
+                <div class="col-md-6" id="live_user">
+                    
+                </div>
+                
+            </div>
+
+
+            <script>
+            var addIter=0;
+            var markers=[];
+
+            function users() {
+              $.get("/api/user-trend/")
+                .done(function( data ) {
+                  if (addIter == 9){
+                $('#live_user').empty();
+                  addIter = 0;
+                  }
+                  $.each( data.user_trend, function( i, item ) {
+                    
+                    user_html = '<blockquote><p><b> User: </b> /u/' + item.author +  ' </p> </blockquote>';
+                       $('#live_user').prepend(user_html);
+                    
+                    })
+                  addIter += 1;
+                });
+            }
+
+            setInterval(users, 3500)
+           </script>
+           
+ 
+        <div class="container">
+            <footer class="footer">
+                <p>&copy; Aravind Kumar Ramesh - Insight Data Engineering Fellow - New York</p>
+            </footer>
+        </div>
+    
+</body>
+ 
+
+
+
+</html>
+
