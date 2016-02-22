@@ -19,3 +19,4 @@ pipleline using open source technologies.
 
 ## Data Pipeline
 ![alt tag](https://raw.githubusercontent.com/aravindk1992/RedditR--Insight-Data-Engineering-Project/master/insightpipeline.png)
+Thanks to /r/Stuck_In_the_Matrix for providing the historical dataset from October 2007- December 2015 for this project.  The entire repo is <a href="http://couch.whatbox.ca:36975/reddit/submissions/monthly/"> here</a>. The data is a monthly dump that isin the bz2 file format. The file dump was then downloaded to s3 bucket on Amazon AWS and uncompressed using a `wget` request in python.
