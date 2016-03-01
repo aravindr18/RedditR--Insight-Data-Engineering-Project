@@ -10,7 +10,7 @@ import pyspark_cassandra
 from pyspark.storagelevel import StorageLevel
 import sys
 
-# keyspace on cassandra where the database is
+# keyspace on cassandra where the table is
 keyspace = 'flashback'
 
 
