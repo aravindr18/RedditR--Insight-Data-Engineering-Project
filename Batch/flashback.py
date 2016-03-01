@@ -1,4 +1,4 @@
-"""This python script reads data from S3 and tries to display the first post of a user
+"""This python script reads data from parquet table and tries to display the first post of a user
 The result will be stored in Cassandra with the following Schema
  User | DateTime | Text | Link Topic | Subreddit
  """
