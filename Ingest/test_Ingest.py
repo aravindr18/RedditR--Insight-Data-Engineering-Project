@@ -16,6 +16,6 @@ sqlContext = SQLContext(sc)
 parquetFile = sqlContext.read.parquet("hdfs://ec2-52-71-113-80.compute-1.amazonaws.com:9000/reddit/data/RC_2007-10.parquet")
 
 parquetFile.registerTempTable("temp");
-teenagers = sqlContext.sql("SELECT count(*) FROM temp WHERE author ='cup' ")
+testEntry = sqlContext.sql("SELECT count(*) FROM temp WHERE author ='cup' ")
 
-print teenagers.collect()
+print testEntry.collect()
