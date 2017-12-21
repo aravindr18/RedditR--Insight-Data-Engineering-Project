@@ -10,6 +10,7 @@ The <b>Functional </b>motivation for this project was to:
 1. Create real-time trends on reddit
 2. Experimental Subreddit Recommendation System at scale
 3. Finding User posts (and demonstrating the power of no-sql database in finding needle in a haystack and analytics)
+
 The <b>Engineering</b> movitation behind building such a product is to demonstrate the ability to create a scalable real-time big data
 pipleline using open source technologies. 
 
